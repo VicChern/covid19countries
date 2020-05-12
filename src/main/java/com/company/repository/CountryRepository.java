@@ -1,9 +1,9 @@
 package com.company.repository;
 
-import com.company.model.Country;
+import com.company.model.CountryData;
 import org.springframework.data.repository.CrudRepository;
 
-public interface CountryRepository extends CrudRepository<Country, Long> {
+public interface CountryRepository extends CrudRepository<CountryData, Long> {
 
 
 
