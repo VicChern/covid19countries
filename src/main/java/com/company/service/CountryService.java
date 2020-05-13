@@ -19,6 +19,9 @@ public class CountryService {
         this.countryRepository = countryRepository;
     }
 
+    public CountryService() {
+    }
+
     public Iterable<CountryData> listOfAllAffectedCountries() {
         List<CountryData> listOfAffectedCountries = new ArrayList<>();
         List<CountryData> listOfAllCountries = (ArrayList<CountryData>) countryRepository.findAll();
