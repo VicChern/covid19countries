@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.company.model.Country;
 import com.company.model.CountryData;
+import com.company.model.Global;
 import com.company.service.CountryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Covid19countriesApplication {
     private final static Logger logger = LoggerFactory.getLogger(Covid19countriesApplication.class);
+    private Country country;
 
     public static void main(String[] args) {
         SpringApplication.run(Covid19countriesApplication.class, args);
@@ -26,7 +28,7 @@ public class Covid19countriesApplication {
     }
 
     @Bean
-    CommandLineRunner saveDataToTheDb(CountryService countryService) {
+    CommandLineRunner addCountriesToTheDb(CountryService countryService) {
         return args -> {
 
             // Jackson mapper for reading JSON and loading json
@@ -35,7 +37,7 @@ public class Covid19countriesApplication {
             try {
                 logger.debug("Try to get Countries list and store to the Country object");
                 URL url = new URL("https://api.covid19api.com/summary");
-                Country country = mapper.readValue(url, Country.class);
+                country = mapper.readValue(url, Country.class);
 
                 logger.debug("Saving countries to the DB");
                 countryService.save(country.getListOfCountries());
@@ -50,11 +52,28 @@ public class Covid19countriesApplication {
     CommandLineRunner getAffectedCountries(CountryService countryService) {
         return args -> {
             try {
-                List<CountryData> listOFAffectedCountries = (ArrayList<CountryData>)countryService.listOfAllAffectedCountries();
-                System.out.println("Count of all affected countries is:" + listOFAffectedCountries.size());
+                List<CountryData> listOfAffectedCountries = (ArrayList<CountryData>) countryService.listOfAllAffectedCountries();
+                System.out.println("Count of all affected countries is:" + listOfAffectedCountries.size());
 
             } catch (NullPointerException e) {
-                System.out.println("There is no affected countries");
+                System.out.println("There is no affected countries" + e.getMessage());
+            }
+
+        };
+    }
+
+    @Bean
+    CommandLineRunner getPercentageOfRecoveredPersons() {
+        return args -> {
+            try {
+                logger.debug("Try to get global Data and store to the Global object");
+                Global globalData = country.getGlobal();
+
+                int percentageOfRecoveredPersons = globalData.getTotalRecovered() / (globalData.getTotalConfirmed() / 100);
+
+                System.out.println("Global recovery rate is " + percentageOfRecoveredPersons + " %");
+            } catch (NullPointerException e) {
+                System.out.println("There is no affected countries" + e.getMessage());
             }
         };
     }

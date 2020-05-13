@@ -1,13 +1,11 @@
 package com.company.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Country {
-
     @JsonProperty("Countries")
     private List<CountryData> listOfCountries;
     @JsonProperty("Global")
