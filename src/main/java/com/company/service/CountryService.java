@@ -24,6 +24,7 @@ public class CountryService {
 
     public Iterable<CountryData> listOfAllAffectedCountries() {
         List<CountryData> listOfAffectedCountries = new ArrayList<>();
+
         List<CountryData> listOfAllCountries = (ArrayList<CountryData>) countryRepository.findAll();
         for (CountryData countryData : listOfAllCountries) {
             if (countryData.getTotalConfirmed() > 0) {

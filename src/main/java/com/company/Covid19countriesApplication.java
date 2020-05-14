@@ -29,6 +29,7 @@ public class Covid19countriesApplication {
 
     @Bean
     CommandLineRunner addCountriesToTheDb(CountryService countryService) {
+        logger.info("Entered addCountriesToTheDb method");
         return args -> {
 
             // Jackson mapper for reading JSON and loading json
@@ -50,6 +51,7 @@ public class Covid19countriesApplication {
 
     @Bean
     CommandLineRunner getAffectedCountries(CountryService countryService) {
+        logger.info("Entered to getAffectedCountries method");
         return args -> {
             try {
                 List<CountryData> listOfAffectedCountries = (ArrayList<CountryData>) countryService.listOfAllAffectedCountries();
@@ -64,6 +66,7 @@ public class Covid19countriesApplication {
 
     @Bean
     CommandLineRunner getPercentageOfRecoveredPersons() {
+        logger.info("Entered to getPercentageOfRecoveredPersons method");
         return args -> {
             try {
                 logger.debug("Try to get global Data and store to the Global object");

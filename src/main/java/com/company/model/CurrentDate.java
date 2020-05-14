@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@AllArgsConstructor
 public class CurrentDate {
 
     @JsonProperty("Date")

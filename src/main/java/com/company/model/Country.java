@@ -3,8 +3,9 @@ package com.company.model;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 
-
+@AllArgsConstructor
 public class Country {
     @JsonProperty("Countries")
     private List<CountryData> listOfCountries;

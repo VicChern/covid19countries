@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+
 
 @SpringBootTest
 class Covid19countriesApplicationTests {
@@ -30,13 +30,12 @@ class Covid19countriesApplicationTests {
     @Mock
     private static CountryService countryService;
 
-    private static Country country;
     private static List<CountryData> listOfCountries;
     private static Global globalData;
 
     @BeforeAll
     static void setup() {
-       MockitoAnnotations.initMocks(Covid19countriesApplicationTests.class);
+        MockitoAnnotations.initMocks(Covid19countriesApplicationTests.class);
 
         CountryData countryData = new CountryData();
         countryData.setId(1L);
@@ -67,7 +66,7 @@ class Covid19countriesApplicationTests {
         globalData.setTotalRecovered(230845);
 
 
-        country = new Country();
+        Country country = new Country();
         country.setListOfCountries(listOfCountries);
         country.setDate(date);
         country.setGlobal(globalData);
@@ -76,14 +75,16 @@ class Covid19countriesApplicationTests {
 
     @Test
     void addCountriesToTheDbTest() throws Exception {
-     
+       assertNotNull(covid19countriesApplication.addCountriesToTheDb(countryService));
+       doNothing().when(countryService).save(listOfCountries);
     }
 
     @Test
-    void getAffectedCountriesTest() {
+    void getAffectedCountriesTest() throws Exception {
         when(countryService.listOfAllAffectedCountries()).thenReturn(listOfCountries);
 
         covid19countriesApplication.getAffectedCountries(countryService);
+
         assertEquals(1, listOfCountries.size());
         assertNotNull(countryService.listOfAllAffectedCountries());
 
@@ -91,7 +92,12 @@ class Covid19countriesApplicationTests {
     }
 
     @Test
-    void getPercentageOfRecoveredPersonsTest() {
+    void getPercentageOfRecoveredPersonsTest() throws Exception {
+        int percentageOfRecoveredPersons = globalData.getTotalRecovered() / (globalData.getTotalConfirmed() / 100);
+
+        assertNotNull(covid19countriesApplication.getPercentageOfRecoveredPersons());
+        assertEquals(19, percentageOfRecoveredPersons);
+
 
     }
 
