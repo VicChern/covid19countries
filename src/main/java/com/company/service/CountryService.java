@@ -22,7 +22,7 @@ public class CountryService {
     public CountryService() {
     }
 
-    public Iterable<CountryData> listOfAllAffectedCountries() {
+    public List<CountryData> listOfAllAffectedCountries() {
         List<CountryData> listOfAffectedCountries = new ArrayList<>();
 
         List<CountryData> listOfAllCountries = (ArrayList<CountryData>) countryRepository.findAll();

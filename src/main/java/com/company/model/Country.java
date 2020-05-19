@@ -1,6 +1,7 @@
 package com.company.model;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -40,5 +41,20 @@ public class Country {
 
     public void setListOfCountries(List<CountryData> listOfCountries) {
         this.listOfCountries = listOfCountries;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Country country = (Country) o;
+        return listOfCountries.equals(country.listOfCountries) &&
+                global.equals(country.global) &&
+                date.equals(country.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(listOfCountries, global, date);
     }
 }

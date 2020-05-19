@@ -18,12 +18,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class Covid19countriesApplication {
-    private final static Logger logger = LoggerFactory.getLogger(Covid19countriesApplication.class);
+public class Covid19CountriesApplication {
+    private final static Logger logger = LoggerFactory.getLogger(Covid19CountriesApplication.class);
     private Country country;
 
     public static void main(String[] args) {
-        SpringApplication.run(Covid19countriesApplication.class, args);
+        SpringApplication.run(Covid19CountriesApplication.class, args);
 
     }
 
